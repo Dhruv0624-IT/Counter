@@ -4,8 +4,8 @@ import axios from 'axios';
 import 'animate.css';
 
 const Update = () => {
-  const { id } = useParams();                      // Get product ID from URL
-  const navigate = useNavigate();                  // Navigation hook
+  const { id } = useParams();                   
+  const navigate = useNavigate();                 
   const [product, setProduct] = useState({
     category: '',
     p_name: '',
@@ -14,24 +14,21 @@ const Update = () => {
     p_url: ''
   });
 
-  // Fetch product on mount
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`)
       .then((res) => setProduct(res.data))
       .catch((err) => console.error("Fetch error:", err));
   }, [id]);
 
-  // Update form fields
   const handleChange = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
-  // Submit updated product
   const updateProduct = async (e) => {
-    e.preventDefault(); // Important to prevent default form refresh
+    e.preventDefault(); 
     try {
       await axios.put(`${import.meta.env.VITE_API_URL}/products/${id}`, product);
-      navigate('/view'); // Redirect on success
+      navigate('/view'); 
     } catch (error) {
       console.error("Update error:", error);
     }

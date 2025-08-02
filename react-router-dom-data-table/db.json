@@ -1,0 +1,13 @@
+{
+  "products": [
+    {
+      "id": "0f11",
+      "category": "Electronic",
+      "p_name": "watch",
+      "p_price": "1500",
+      "p_url": "https://www.titan.co.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw66fe4c98/images/Titan/Catalog/90188AP06_1.jpg?sw=600&sh=600",
+      "p_desc": "watch",
+      "createdAt": "2025-08-02T08:59:59.262Z"
+    }
+  ]
+}
