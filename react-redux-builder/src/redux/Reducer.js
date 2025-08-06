@@ -1,0 +1,33 @@
+import {
+  SET_USERS,
+  ADD_USER_SUCCESS,
+  UPDATE_USER_SUCCESS,
+  DELETE_USER_SUCCESS,
+  REQUEST_START,
+  REQUEST_FAILURE
+} from './UserAction';
+
+const initialState = {
+  users: [],
+  loading: false,
+  error: null,
+};
+
+export const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case REQUEST_START:
+      return { ...state, loading: true, error: null };
+    case SET_USERS:
+      return { ...state, users: action.payload, loading: false };
+    case ADD_USER_SUCCESS:
+      return { ...state, users: [...state.users, action.payload], loading: false };
+    case UPDATE_USER_SUCCESS:
+      return { ...state, users: state.users.map(user => user.id === action.payload.id ? action.payload : user), loading: false };
+    case DELETE_USER_SUCCESS:
+      return { ...state, users: state.users.filter(user => user.id !== action.payload), loading: false };
+    case REQUEST_FAILURE:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

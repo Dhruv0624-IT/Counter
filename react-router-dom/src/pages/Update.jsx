@@ -4,8 +4,8 @@ import axios from 'axios';
 import 'animate.css';
 
 const Update = () => {
-  const { id } = useParams();                      // Get product ID from URL
-  const navigate = useNavigate();                  // Navigation hook
+  const { id } = useParams();                    
+  const navigate = useNavigate();                  
   const [product, setProduct] = useState({
     category: '',
     p_name: '',
@@ -13,8 +13,7 @@ const Update = () => {
     p_desc: '',
     p_url: ''
   });
-
-  // Fetch product on mount
+  
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`)
       .then((res) => setProduct(res.data))

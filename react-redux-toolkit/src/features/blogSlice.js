@@ -5,6 +5,7 @@ const blogSlice = createSlice({
   initialState: {
     counter: 0,
     blogList: [],
+    editBlogId: null,
   },
   reducers: {
     inc: (state) => {
@@ -22,8 +23,24 @@ const blogSlice = createSlice({
     addBlog: (state, action) => {
       state.blogList.push(action.payload);
     },
+    deleteBlog: (state, action) => {
+      const id = action.payload;
+      state.blogList = state.blogList.filter((blog) => blog.id !== id);
+    },
+    setEditBlogId: (state, action) => {
+      state.editBlogId = action.payload;
+    },
+    clearEditBlogId: (state) => {
+      state.editBlogId = null;
+    },
+    editBlog: (state, action) => {
+      const { id, updatedData } = action.payload;
+      const index = state.blogList.findIndex((blog) => blog.id === id);
+      if (index !== -1) {
+        state.blogList[index] = { ...state.blogList[index], ...updatedData };
+      }
+    },
   },
 });
-
-export const { inc, dec, reset, incByTen, addBlog } = blogSlice.actions;
+export const {inc,dec,reset,incByTen,addBlog,deleteBlog,editBlog,setEditBlogId,clearEditBlogId,} = blogSlice.actions;
 export default blogSlice.reducer;
