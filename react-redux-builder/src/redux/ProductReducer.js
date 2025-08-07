@@ -1,4 +1,3 @@
-// src/redux/ProductReducer.js
 
 const initialProductState = {
   products: [],
