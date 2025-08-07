@@ -7,6 +7,7 @@ export const REQUEST_FAILURE = 'REQUEST_FAILURE';
 
 const API_URL = 'https://jsonplaceholder.typicode.com/users';
 
+
 export const setUsers = (users) => ({
   type: SET_USERS,
   payload: users,
@@ -41,7 +42,6 @@ export const getAllUsers = () => {
   return async (dispatch) => {
     dispatch(requestStart());
     try {
- 
       const data = [
         { id: 1, username: 'Alice' },
         { id: 2, username: 'Bob' },
