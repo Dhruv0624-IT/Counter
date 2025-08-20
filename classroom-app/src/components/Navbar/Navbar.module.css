@@ -1,0 +1,65 @@
+.navbar {
+  height: 60px;
+  background-color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.appTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.userName {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--danger-color, #e74c3c);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .appTitle {
+    font-size: 1.1rem;
+  }
+
+  .userName {
+    display: none; /* Hide long names on mobile */
+  }
+}
