@@ -1,0 +1,127 @@
+{
+  "rooms": [
+    {
+      "id": 1,
+      "roomNumber": "101",
+      "type": "Single",
+      "price": 10000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Air Conditioning",
+        "Private Bathroom"
+      ]
+    },
+    {
+      "id": 2,
+      "roomNumber": "102",
+      "type": "Double",
+      "price": 15000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Balcony",
+        "Mini-bar"
+      ]
+    },
+    {
+      "id": 3,
+      "roomNumber": "201",
+      "type": "Suite",
+      "price": 25000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Balcony",
+        "Kitchenette",
+        "Jacuzzi"
+      ]
+    },
+    {
+      "id": 4,
+      "roomNumber": "202",
+      "type": "Single",
+      "price": 9500,
+      "isAvailable": false,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Private Bathroom"
+      ]
+    },
+    {
+      "id": 5,
+      "roomNumber": "301",
+      "type": "Double",
+      "price": 16000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Balcony",
+        "Mini-bar"
+      ]
+    },
+    {
+      "id": 6,
+      "roomNumber": "303",
+      "type": "Suite",
+      "price": 20000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Balcony",
+        "Mini-bar",
+        "Kitchenette"
+      ]
+    },
+    {
+      "id": 7,
+      "roomNumber": "302",
+      "type": "Single",
+      "price": 11000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Air Conditioning",
+        "Private Bathroom"
+      ]
+    },
+    {
+      "id": 8,
+      "roomNumber": "103",
+      "type": "Master",
+      "price": 30000,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Air Conditioning",
+        "Private Bathroom",
+        "Balcony",
+        "Jacuzzi",
+        "Kitchenette"
+      ]
+    },
+    {
+      "id": 9,
+      "roomNumber": "203",
+      "type": "Master",
+      "price": 19500,
+      "isAvailable": true,
+      "imageUrl": "https://via.placeholder.com/400x200",
+      "features": [
+        "Free Wifi",
+        "Air Conditioning",
+        "Private Bathroom",
+        "Balcony"
+      ]
+    }
+  ],
+  "reservations": []
+}
