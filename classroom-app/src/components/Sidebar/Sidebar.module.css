@@ -1,6 +1,6 @@
 .sidebar {
   width: 240px;
-  background-color: var(--primary-color);
+  background-color: var(--primary-color, #1976d2);
   color: white;
   display: flex;
   flex-direction: column;
@@ -15,12 +15,6 @@
 
 .closed {
   transform: translateX(-100%);
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
 }
 
 .nav {
@@ -59,28 +53,19 @@
   padding-left: 0.5rem;
 }
 
-.menuButton {
-  display: none;
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 999;
-  background: none;
-  border: none;
-  color: var(--primary-color);
-  cursor: pointer;
+@media (min-width: 768px) {
+  .sidebar {
+    position: relative;
+    transform: translateX(0) !important;
+  }
 }
 
-@media (max-width: 768px) {
-  .menuButton {
-    display: block;
-  }
-
+@media (max-width: 767px) {
   .sidebar {
     position: fixed;
-    top: 0;
+    top: 56px; /* below navbar */
     left: 0;
-    height: 100%;
-    z-index: 998;
+    height: calc(100% - 56px);
+    z-index: 999;
   }
 }

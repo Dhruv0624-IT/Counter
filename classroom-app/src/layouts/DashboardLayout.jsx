@@ -1,18 +1,23 @@
-import React from "react";
+// src/layouts/DashboardLayout.jsx
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-import "../styles/global.css";
+import styles from "./DashboardLayout.module.css";
 
 export default function DashboardLayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
   return (
-    <div className="dashboard-layout">
-      <Navbar />
-      <div className="dashboard-container">
-        <Sidebar />
-        <main className="dashboard-main">
-          <Outlet /> {/* Dashboard pages like Index, Classroom, Assignment, Gradebook render here */}
-        </main>
+    <div className={styles.layout}>
+      <Navbar onToggleSidebar={toggleSidebar} />
+      <div className={styles.main}>
+        <Sidebar isOpen={isSidebarOpen} />
+        <div className={styles.content}>
+          <Outlet />
+        </div>
       </div>
     </div>
   );

@@ -1,65 +1,78 @@
 .navbar {
-  height: 60px;
-  background-color: var(--secondary-color);
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .left {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
-.appTitle {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin: 0;
+.title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #202124;
 }
 
 .right {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
-.userSection {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-
-.userName {
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.logoutButton {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background-color: var(--danger-color, #e74c3c);
-  color: white;
+.iconBtn {
+  background: none;
   border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background 0.3s ease;
+  font-size: 1.2rem;
+  color: #333;
 }
 
-.logoutButton:hover {
-  background-color: #c0392b;
+.menuWrapper {
+  position: relative;
 }
 
-@media (max-width: 768px) {
-  .appTitle {
-    font-size: 1.1rem;
-  }
+.dropdown {
+  position: absolute;
+  top: 2.2rem;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
 
-  .userName {
-    display: none; /* Hide long names on mobile */
-  }
+.dropdown button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.dropdown button:hover {
+  background: #f1f3f4;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
 }

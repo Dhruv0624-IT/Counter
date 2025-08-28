@@ -1,42 +1,56 @@
-import React from "react";
-import styles from "./Navbar.module.css";
+import React, { useState } from "react";
+import { FaBars, FaPlus } from "react-icons/fa";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { FiLogOut } from "react-icons/fi";
+import styles from "./Navbar.module.css";
 
-export default function Navbar() {
-  const { user, logout } = useAuth();
+export default function Navbar({ onToggleSidebar }) {
+  const { user } = useAuth();
   const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error.message);
-    }
-  };
+  const [showPlusMenu, setShowPlusMenu] = useState(false);
 
   return (
     <header className={styles.navbar}>
+      {/* Left side */}
       <div className={styles.left}>
-        <h1 className={styles.appTitle}>Classroom App</h1>
+        <button className={styles.iconBtn} onClick={onToggleSidebar}>
+          <FaBars />
+        </button>
+        <h1 className={styles.title}>Classroom</h1>
       </div>
 
+      {/* Right side */}
       <div className={styles.right}>
+        <div className={styles.menuWrapper}>
+          <button
+            className={styles.iconBtn}
+            onClick={() => setShowPlusMenu(!showPlusMenu)}
+          >
+            <FaPlus />
+          </button>
+          {showPlusMenu && (
+            <div className={styles.dropdown}>
+              <button onClick={() => alert("Join class clicked")}>
+                Join class
+              </button>
+              <button onClick={() => alert("Create class clicked")}>
+                Create class
+              </button>
+            </div>
+          )}
+        </div>
+
         {user && (
-          <div className={styles.userSection}>
-            <span className={styles.userName}>
-              {user.displayName || user.email}
-            </span>
-            <button
-              className={styles.logoutButton}
-              onClick={handleLogout}
-              aria-label="Logout"
-            >
-              <FiLogOut size={18} /> Logout
-            </button>
-          </div>
+          <button
+            className={styles.profileBtn}
+            onClick={() => navigate("/profile")}
+          >
+            <img
+              src={user.photoURL || "https://ui-avatars.com/api/?name=U"}
+              alt="Profile"
+              className={styles.avatar}
+            />
+          </button>
         )}
       </div>
     </header>

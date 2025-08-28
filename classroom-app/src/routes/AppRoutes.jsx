@@ -1,10 +1,9 @@
 // src/routes/AppRoutes.jsx
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-
+import { Routes, Route, Navigate } from "react-router-dom";
+import { ProtectedRoute, PublicRoute } from "../utils/ProtectedRoute";
 import AuthLayout from "../layouts/AuthLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
-
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
@@ -14,19 +13,38 @@ import Assignment from "../pages/Dashboard/Assignment";
 import Gradebook from "../pages/Dashboard/Gradebook";
 import Profile from "../pages/Profile";
 
-import ProtectedRoute from "../utils/ProtectedRoute";
-
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Public Auth Routes */}
+      {/* ---------- Public Auth Routes ---------- */}
       <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
       </Route>
 
-      {/* Protected Dashboard Routes */}
+      {/* ---------- Protected Dashboard Routes ---------- */}
       <Route
         element={
           <ProtectedRoute>
@@ -41,8 +59,8 @@ export default function AppRoutes() {
         <Route path="/profile" element={<Profile />} />
       </Route>
 
-      {/* Default Redirect */}
-      <Route path="*" element={<Login />} />
+      {/* ---------- Default redirect ---------- */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

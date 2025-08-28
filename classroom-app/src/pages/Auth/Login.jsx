@@ -1,7 +1,7 @@
+// src/pages/Auth/Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import validateForm from "../../utils/validateForm";
 import styles from "./AuthForm.module.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -21,9 +21,24 @@ export default function Login() {
     setFirebaseError("");
   };
 
+  // Simple validation (no external dependency)
+  const validate = () => {
+    let newErrors = {};
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    }
+    return newErrors;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formData, "login");
+    const validationErrors = validate();
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
@@ -32,16 +47,12 @@ export default function Login() {
     try {
       setLoading(true);
       await login(formData.email, formData.password);
-      navigate("/profile");
+      navigate("/dashboard"); // ✅ redirect to dashboard after login
     } catch (err) {
       setFirebaseError(err.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
@@ -71,7 +82,10 @@ export default function Login() {
           onChange={handleChange}
           placeholder="Enter your password"
         />
-        <span className={styles.togglePassword} onClick={togglePasswordVisibility}>
+        <span
+          className={styles.togglePassword}
+          onClick={() => setShowPassword(!showPassword)}
+        >
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </span>
         {errors.password && <p className={styles.error}>{errors.password}</p>}

@@ -1,7 +1,7 @@
+// src/pages/Auth/Register.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import validateForm from "../../utils/validateForm";
 import styles from "./AuthForm.module.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -19,30 +19,50 @@ export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
     setFirebaseError("");
   };
 
+  // Simple built-in validation
+  const validate = () => {
+    let newErrors = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    return newErrors;
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm(formData, "register");
+    const validationErrors = validate();
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setErrors({ confirmPassword: "Passwords do not match" });
-      return;
-    }
-
     try {
       setLoading(true);
       await register(formData.email, formData.password);
-      navigate("/profile");
+      navigate("/login"); // ✅ Redirect to login after successful signup
     } catch (err) {
       setFirebaseError(err.message);
     } finally {

@@ -1,64 +1,74 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { updateProfile } from "firebase/auth";
 import styles from "../styles/Profile.module.css";
 
 export default function Profile() {
-  const { user, updateUserProfile, logout } = useAuth();
-
-  const [displayName, setDisplayName] = useState(user?.displayName || "");
-  const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
+  const { currentUser, logout } = useAuth();
+  const [displayName, setDisplayName] = useState(currentUser?.displayName || "");
+  const [photoURL, setPhotoURL] = useState(currentUser?.photoURL || "");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
-  const handleImageUpload = async (file) => {
-    if (!file || !user) return null;
-
-    const storage = getStorage();
-    const storageRef = ref(storage, `profilePictures/${user.uid}`);
-    await uploadBytes(storageRef, file);
-    return await getDownloadURL(storageRef);
-  };
-
-  // Handle profile update
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handlePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
     setLoading(true);
-    setMessage("");
 
     try {
-      let updatedPhotoURL = photoURL;
-      const fileInput = document.getElementById("profilePic").files[0];
+      const storage = getStorage();
+      const storageRef = ref(storage, `profilePictures/${currentUser.uid}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
 
-      if (fileInput) {
-        updatedPhotoURL = await handleImageUpload(fileInput);
-        setPhotoURL(updatedPhotoURL);
-      }
-
-      await updateUserProfile({
-        displayName,
-        photoURL: updatedPhotoURL,
-      });
-
-      setMessage("✅ Profile updated successfully!");
+      await updateProfile(currentUser, { photoURL: url });
+      setPhotoURL(url);
+      alert("Profile picture updated!");
     } catch (error) {
-      setMessage("❌ Failed to update profile: " + error.message);
+      console.error("Error uploading profile picture:", error);
+      alert("Failed to upload profile picture");
     }
-
     setLoading(false);
   };
 
+  const handleUpdateProfile = async () => {
+    if (!displayName) return alert("Display name cannot be empty");
+    setLoading(true);
+
+    try {
+      await updateProfile(currentUser, { displayName, photoURL });
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile");
+    }
+    setLoading(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      window.location.href = "/login";
+    } catch (err) {
+      console.error("Logout failed:", err.message);
+    }
+  };
+
   return (
-    <div className={styles.profileContainer}>
-      <h1>My Profile</h1>
-      <form className={styles.profileForm} onSubmit={handleSubmit}>
-        <div className={styles.avatarSection}>
+    <div className={styles.profilePage}>
+      <div className={styles.profileCard}>
+        <h2 className={styles.title}>My Profile</h2>
+
+        <div className={styles.avatarWrapper}>
           <img
-            src={photoURL || "https://via.placeholder.com/150"}
+            src={photoURL || "https://via.placeholder.com/100?text=Profile"}
             alt="Profile"
             className={styles.avatar}
           />
-          <input type="file" id="profilePic" accept="image/*" />
+          <label className={styles.uploadBtn}>
+            Change Photo
+            <input type="file" accept="image/*" onChange={handlePhotoChange} hidden />
+          </label>
         </div>
 
         <div className={styles.formGroup}>
@@ -73,19 +83,21 @@ export default function Profile() {
 
         <div className={styles.formGroup}>
           <label>Email</label>
-          <input type="email" value={user?.email || ""} disabled />
+          <input type="email" value={currentUser?.email} disabled />
         </div>
 
-        {message && <p className={styles.message}>{message}</p>}
-
-        <button type="submit" disabled={loading}>
+        <button
+          onClick={handleUpdateProfile}
+          disabled={loading}
+          className={styles.updateBtn}
+        >
           {loading ? "Updating..." : "Update Profile"}
         </button>
-      </form>
 
-      <button onClick={logout} className={styles.logoutBtn}>
-        🚪 Logout
-      </button>
+        <button onClick={handleLogout} className={styles.logoutBtn}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
